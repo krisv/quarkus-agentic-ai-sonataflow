@@ -1,0 +1,99 @@
+---
+openapi: 3.0.3
+info:
+  title: SonataFlow Plans
+  description: An application that can process plans
+  version: 1.0.0-SNAPSHOT
+servers:
+  - url: http://172.18.240.1:8080
+    description: Agentic
+paths:
+  /research/author:
+    post:
+      operationId: author
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResearchInfo"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResearchInfo"
+      summary: Remote Author Article
+      tags:
+      - Writer Resource
+  /research/format:
+    post:
+      operationId: format
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResearchInfo"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResearchInfo"
+      summary: Remote Format Article
+      tags:
+      - Writer Resource
+  /research/research:
+    post:
+      operationId: research
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResearchInfo"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResearchInfo"
+      summary: Remote Create Research
+      tags:
+      - Writer Resource
+  /research/review:
+    post:
+      operationId: review
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResearchInfo"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResearchInfo"
+      summary: Remote Review Research
+      tags:
+      - Writer Resource
+components:
+  schemas:
+    ResearchInfo:
+      type: object
+      properties:
+        topic:
+          type: string
+        research:
+          type: string
+        article:
+          type: string
+        review:
+          type: string
