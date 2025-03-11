@@ -3,6 +3,7 @@
   "version": "1.0",
   "name": "Research",
   "description": "Research",
+  "dataInputSchema": "input.schema.json",
   "start": "SetCounter",
   "functions": [
     {

@@ -5,7 +5,7 @@ info:
   description: An application that can process plans
   version: 1.0.0-SNAPSHOT
 servers:
-  - url: http://172.18.240.1:8080
+  - url: http://localhost:8080
     description: Agentic
 paths:
   /research/author:
