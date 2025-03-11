@@ -1,0 +1,152 @@
+{
+  "id": "Research-event",
+  "version": "1.0",
+  "name": "Research-event",
+  "description": "Research-event",
+  "dataInputSchema": "input.schema.json",
+  "start": "SetCounter",
+  "functions": [
+    {
+      "name": "researchTopic",
+      "operation": "agentic.yaml#research"
+    },
+    {
+      "name": "authorArticle",
+      "operation": "agentic.yaml#author"
+    },
+    {
+      "name": "reviewArticle",
+      "operation": "agentic.yaml#review"
+    },
+    {
+      "name": "count++",
+      "type": "expression",
+      "operation": ".counter+1"
+    },
+    {
+      "name": "formatArticle",
+      "operation": "agentic.yaml#format"
+    }
+  ],
+  "events": [
+    {
+      "name": "request-review",
+      "source": "",
+      "type": "request-review"
+    },
+    {
+      "name": "result-review",
+      "source": "",
+      "type": "result-review"
+    }
+  ],
+  "states": [
+    {
+      "name": "SetCounter",
+      "type": "inject",
+      "data": {
+        "counter": 0
+      },
+      "transition": "ResearchTopic"
+    },
+    {
+      "name": "ResearchTopic",
+      "type": "operation",
+      "actions": [
+        {
+          "name": "Research Topic",
+          "functionRef": {
+            "refName": "researchTopic",
+            "arguments": {
+              "topic": ".topic",
+              "research": ".research",
+              "review": ".review"
+            }
+          },
+          "actionDataFilter": {
+            "results": ".research",
+            "toStateData": ".research"
+          }
+        }
+      ],
+      "transition": "AuthorArticle"
+    },
+    {
+      "name": "AuthorArticle",
+      "type": "operation",
+      "actions": [
+        {
+          "name": "Author Article",
+          "functionRef": {
+            "refName": "authorArticle",
+            "arguments": {
+              "topic": ".topic",
+              "research": ".research",
+              "article": ".article",
+              "review": ".review"
+            }
+          },
+          "actionDataFilter": {
+            "results": ".article",
+            "toStateData": ".article"
+          }
+        }
+      ],
+      "transition": "ReviewArticle"
+    },
+    {
+      "name": "ReviewArticle",
+      "type": "callback",
+      "action": {
+        "name": "Review Article",
+        "eventRef": {
+          "triggerEventRef": "request-review",
+          "data": "{\"topic\": \".topic\", \"article\": \".article\"}"
+        }
+      },
+      "eventRef": "result-review",
+      "eventDataFilter": {
+        "data": ".review",
+        "toStateData": ".review"
+      },
+      "transition": "Choice"
+    },
+    {
+      "name": "Choice",
+      "type": "switch",
+      "dataConditions": [
+        {
+          "condition": "${ .counter<=3 and (.review | startswith(\"RESEARCHER\"))}",
+          "transition": "ResearchTopic"
+        },
+        {
+          "condition": "${ .counter<=3 and (.review | startswith(\"AUTHOR\"))}",
+          "transition": "AuthorArticle"
+        }
+      ],
+      "defaultCondition": {
+        "transition": "FormatArticle"
+      }
+    },
+    {
+      "name": "FormatArticle",
+      "type": "operation",
+      "actions": [
+        {
+          "name": "Format Article",
+          "functionRef": {
+            "refName": "formatArticle",
+            "arguments": {
+              "article": ".article"
+            }
+          },
+          "actionDataFilter": {
+            "results": ".article",
+            "toStateData": ".article"
+          }
+        }
+      ],
+      "end": true
+    }
+  ]
+}
