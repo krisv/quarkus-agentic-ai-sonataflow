@@ -52,8 +52,7 @@
             }
           },
           "actionDataFilter": {
-            "results": ".research",
-            "toStateData": ".research"
+            "results": "{research}"
           }
         }
       ],
@@ -75,8 +74,7 @@
             }
           },
           "actionDataFilter": {
-            "results": ".article",
-            "toStateData": ".article"
+            "results": "{article}"
           }
         }
       ],
@@ -96,8 +94,7 @@
             }
           },
           "actionDataFilter": {
-            "results": ".review",
-            "toStateData": ".review"
+            "results": "{review}"
           }
         },
         {
@@ -142,8 +139,7 @@
             }
           },
           "actionDataFilter": {
-            "results": ".article",
-            "toStateData": ".article"
+            "results": "{article}"
           }
         }
       ],
