@@ -64,8 +64,7 @@
             }
           },
           "actionDataFilter": {
-            "results": ".research",
-            "toStateData": ".research"
+            "results": "{research}"
           }
         }
       ],
@@ -87,8 +86,7 @@
             }
           },
           "actionDataFilter": {
-            "results": ".article",
-            "toStateData": ".article"
+            "results": "{article}"
           }
         }
       ],
@@ -101,13 +99,12 @@
         "name": "Review Article",
         "eventRef": {
           "triggerEventRef": "request-review",
-          "data": "{\"topic\": \".topic\", \"article\": \".article\"}"
+          "data": "{topic: .topic, article: .article}"
         }
       },
       "eventRef": "result-review",
       "eventDataFilter": {
-        "data": ".review",
-        "toStateData": ".review"
+        "data": "{review}"
       },
       "transition": "Choice"
     },
@@ -141,8 +138,7 @@
             }
           },
           "actionDataFilter": {
-            "results": ".article",
-            "toStateData": ".article"
+            "results": "{article}"
           }
         }
       ],
