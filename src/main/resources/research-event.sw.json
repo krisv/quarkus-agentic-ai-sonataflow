@@ -1,8 +1,8 @@
 {
-  "id": "Research",
+  "id": "Research-event",
   "version": "1.0",
-  "name": "Research",
-  "description": "Research",
+  "name": "Research-event",
+  "description": "Research-event",
   "dataInputSchema": "input.schema.json",
   "start": "SetCounter",
   "functions": [
@@ -21,11 +21,23 @@
     {
       "name": "count++",
       "type": "expression",
-      "operation": ".counter+1"
+      "operation": ".counter=.counter+1"
     },
     {
       "name": "formatArticle",
       "operation": "agentic.yaml#format"
+    }
+  ],
+  "events": [
+    {
+      "name": "request-review",
+      "source": "",
+      "type": "request-review"
+    },
+    {
+      "name": "result-review",
+      "source": "",
+      "type": "result-review"
     }
   ],
   "states": [
@@ -76,37 +88,30 @@
           "actionDataFilter": {
             "results": "{article}"
           }
+        },
+        {
+          "name": "Count++",
+          "functionRef": {
+            "refName": "count++"
+          }
         }
       ],
       "transition": "ReviewArticle"
     },
     {
       "name": "ReviewArticle",
-      "type": "operation",
-      "actions": [
-        {
-          "name": "Review Article",
-          "functionRef": {
-            "refName": "reviewArticle",
-            "arguments": {
-              "topic": ".topic",
-              "article": ".article"
-            }
-          },
-          "actionDataFilter": {
-            "results": "{review}"
-          }
-        },
-        {
-          "name": "Count++",
-          "functionRef": {
-            "refName": "count++"
-          },
-          "actionDataFilter": {
-             "toStateData" : ".counter"
-          }
+      "type": "callback",
+      "action": {
+        "name": "Review Article",
+        "eventRef": {
+          "triggerEventRef": "request-review",
+          "data": "{topic: .topic, article: .article}"
         }
-      ],
+      },
+      "eventRef": "result-review",
+      "eventDataFilter": {
+        "data": "{review}"
+      },
       "transition": "Choice"
     },
     {
