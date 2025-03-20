@@ -21,7 +21,7 @@
     {
       "name": "count++",
       "type": "expression",
-      "operation": ".counter+1"
+      "operation": ".counter=.counter+1"
     },
     {
       "name": "formatArticle",
@@ -87,6 +87,12 @@
           },
           "actionDataFilter": {
             "results": "{article}"
+          }
+        },
+        {
+          "name": "Count++",
+          "functionRef": {
+            "refName": "count++"
           }
         }
       ],
